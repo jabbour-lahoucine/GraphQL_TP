@@ -14,4 +14,6 @@ public interface CompteRepository extends JpaRepository<Compte, Long> {
 
     @Query("SELECT SUM(c.solde) FROM Compte c")
     double sumSoldes();
+
+    void deleteById(Long id);
 }

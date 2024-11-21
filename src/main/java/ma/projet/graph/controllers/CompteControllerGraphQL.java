@@ -55,14 +55,10 @@ public class CompteControllerGraphQL {
         }
         return comptes;
     }
-    @MutationMapping
-    public String deleteById(@Argument Long id) {
-        if (compteRepository.existsById(id)) {
-            compteRepository.deleteById(id);
-            return String.format("Compte with ID %d has been deleted successfully.", id);
-        } else {
-            throw new RuntimeException(String.format("Compte with ID %d not found.", id));
-        }
+    @QueryMapping
+    public List<Compte> deleteCompte(@Argument Long id){
+        compteRepository.deleteById(id);
+        return compteRepository.findAll();
     }
 
 

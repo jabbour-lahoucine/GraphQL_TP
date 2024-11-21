@@ -22,7 +22,6 @@ type Compte {
 type Mutation {
     saveCompte(compte:CompteRequest):Compte
     addTransaction(transaction: TransactionRequest): Transaction
-    deleteCompte(id: ID): String
 }
 
 input CompteRequest {
@@ -43,6 +42,7 @@ type Query {
     compteById(id: ID): Compte
     totalSolde: SoldeStats
     findByType(type: TypeCompte): [Compte]
+    deleteCompte(id: ID): [Compte]
 
     compteTransactions(id: ID!): [Transaction]
     allTransactions: [Transaction]

@@ -2,6 +2,7 @@ package ma.projet.graph.controllers;
 
 import lombok.AllArgsConstructor;
 import ma.projet.graph.entities.Compte;
+import ma.projet.graph.entities.TypeCompte;
 import ma.projet.graph.repositories.CompteRepository;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -46,4 +47,23 @@ public class CompteControllerGraphQL {
                 "average", average
         );
     }
+    @QueryMapping
+    public List<Compte> findByType(@Argument TypeCompte type) {
+        List<Compte> comptes = compteRepository.findByType(type);
+        if (comptes.isEmpty()) {
+            throw new RuntimeException(String.format("No accounts found for type: %s", type));
+        }
+        return comptes;
+    }
+    @MutationMapping
+    public String deleteById(@Argument Long id) {
+        if (compteRepository.existsById(id)) {
+            compteRepository.deleteById(id);
+            return String.format("Compte with ID %d has been deleted successfully.", id);
+        } else {
+            throw new RuntimeException(String.format("Compte with ID %d not found.", id));
+        }
+    }
+
+
 }

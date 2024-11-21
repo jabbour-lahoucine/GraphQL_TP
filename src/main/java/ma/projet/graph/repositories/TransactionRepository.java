@@ -1,20 +1,19 @@
 package ma.projet.graph.repositories;
 
+
+import ma.projet.graph.entities.Compte;
 import ma.projet.graph.entities.Transaction;
-import ma.projet.graph.entities.TransactionType;
+
+import ma.projet.graph.entities.TypeTransaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface TrnasactionRepository extends JpaRepository<Transaction, Long> {
-    @Query("SELECT t FROM Transaction t where t.type = :type")
-    List<Transaction> findByType(TransactionType type);
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+    List<Transaction> findByCompte(Compte compte);
 
-    @Query("SELECT SUM(t.montant) FROM Transaction t")
-    double sumMontants();
-
-    void deleteById(Long id);
+    @Query("SELECT SUM(t.montant) FROM Transaction t WHERE t.type = :type")
+    double sumByType(TypeTransaction type);
 }
+
